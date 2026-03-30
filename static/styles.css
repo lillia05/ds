@@ -1,0 +1,106 @@
+/* --- Bagian Utama (Body & Font) --- */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #eafaf1; /* Hijau super muda untuk background */
+    color: #2c3e50; /* Warna teks gelap biar gampang dibaca */
+}
+
+/* --- Container Utama biar konten di tengah --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- Navigasi Atas (Navbar) --- */
+nav { 
+    background-color: #27ae60; /* Hijau Utama yang Profesional */
+    padding: 15px 0; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Bayangan tipis bawah */
+}
+nav ul { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    text-align: center; 
+}
+nav ul li { display: inline; margin: 0 15px; }
+nav ul li a { 
+    text-decoration: none; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 17px;
+    transition: color 0.3s; /* Efek halus saat pointer lewat */
+}
+nav ul li a:hover { color: #d1f2eb; /* Warna hijau muda saat hover */ }
+
+/* --- Main Content Area --- */
+main { padding: 30px 0; }
+
+/* --- Gaya Kotak/Kartu Konten (Biar Rapi) --- */
+.card {
+    background-color: white; 
+    padding: 30px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Bayangan lembut agar kotak 'melayang' */
+    margin-bottom: 20px;
+}
+h1, h2 { color: #1e8449; /* Hijau Gelap untuk Judul */ }
+
+/* --- Gaya Formulir Prediksi --- */
+.form-grid {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* Dua kolom bersisihan */
+    gap: 20px;
+}
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #2c3e50; }
+.form-control { 
+    width: 100%; 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    box-sizing: border-box; /* Agar padding tidak merusak lebar */
+    font-size: 15px;
+}
+.form-control:focus { 
+    border-color: #27ae60; /* Berubah hijau saat diklik */
+    outline: none; 
+}
+
+/* --- Gaya Tombol Hijau --- */
+.btn-predict {
+    background-color: #27ae60; 
+    color: white; 
+    padding: 12px 20px; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    width: 100%; 
+    font-size: 17px; 
+    transition: background-color 0.3s; 
+    margin-top: 10px;
+}
+.btn-predict:hover { background-color: #219150; /* Hijau lebih gelap saat hover */ }
+
+/* --- Gaya Kotak Hasil Prediksi --- */
+.result-box {
+    margin-top: 30px; 
+    padding: 20px; 
+    background-color: #d4edda; /* Hijau muda sukses */
+    border-left: 5px solid #28a745; /* Garis pinggir hijau tua */
+    border-radius: 5px; 
+    color: #155724;
+}
+
+/* --- Container Iframe Dashboard --- */
+.dashboard-container {
+    width: 100%; 
+    height: 900px; 
+    border: 3px solid #27ae60; /* Bingkai hijau tebal */
+    border-radius: 10px; 
+    overflow: hidden;
+}

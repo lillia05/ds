@@ -49,8 +49,8 @@ def run_rf_model_mlflow(df):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     
-    # Matikan autolog agar DagsHub bersih (tidak ada angka 1)
-    # mlflow.sklearn.autolog() 
+    # KITA NYALAKAN LAGI AUTOLOG-NYA agar training_ metrics muncul di DagsHub
+    mlflow.sklearn.autolog() 
 
     with mlflow.start_run(run_name="rf-final-model", experiment_id=experiment_id) as run:
         # PENTING: Pakai balanced agar berani tebak RESIGN
@@ -59,6 +59,7 @@ def run_rf_model_mlflow(df):
 
         y_pred = model_rf.predict(X_test)
 
+        # Metrik Uji (Testing) manual untuk membuktikan model handal pada data baru
         test_accuracy = accuracy_score(y_test, y_pred)
         test_precision = precision_score(y_test, y_pred, zero_division=0)
         test_recall = recall_score(y_test, y_pred, zero_division=0)
@@ -69,13 +70,33 @@ def run_rf_model_mlflow(df):
         mlflow.log_metric("test_recall", test_recall)
         mlflow.log_metric("test_f1_score", test_f1_score)
 
-        # SIMPAN MODEL UNTUK WEBSITE (Menyelesaikan Error Pickle)
+        # MENGIRIM NAMA MODEL KE DAGSHUB (Artifacts & Registered Models)
+        model_signature = infer_signature(model_input=X_train, model_output=y_train)
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+
+        if tracking_url_type_store != "file":
+            mlflow.sklearn.log_model(
+                sk_model=model_rf,
+                artifact_path="model",
+                registered_model_name="rf_model_attrition", # <-- INI NAMA MODELNYA
+                signature=model_signature,
+                input_example=X_train.head(1)
+            )
+        else:
+            mlflow.sklearn.log_model(
+                sk_model=model_rf,
+                artifact_path="model",
+                signature=model_signature,
+                input_example=X_train.head(1)
+            )
+
+        # SIMPAN MODEL LOKAL UNTUK WEBSITE (Menyelesaikan Error Pickle)
         os.makedirs("model", exist_ok=True)
         joblib.dump(model_rf, "model/random_forest_model.pkl")
         print("\n=> Model berhasil disimpan ke: model/random_forest_model.pkl")
 
         print("\n--- Proses Selesai ---")
-        print("Silakan cek menu Experiments di DagsHub Anda!")
+        print("Silakan cek menu Experiments dan Models di DagsHub Anda!")
 
 if __name__ == "__main__":
     dataset_path = "data/Data_Attrition.csv"
